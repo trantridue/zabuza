@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc 
+	http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.1.xsd 
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/data/jpa 
+	http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+ 
+	<!--
+	Makes the project.properties file available as a Properties bean, named projectProperties.
+	The locations list is processed from bottom to top (last first), until an existing file is found.
+	-->
+	<bean id="projectProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<value>classpath:project.properties</value>
+				<value>file:///${common_rep}/${project.groupId}/${project.artifactId}/project.properties</value>
+			</list>
+		</property>
+	</bean>
+ 
+	<!--
+	Setup the log4j configuration file used as soon as Spring have been initialized.
+	Please, see the Log4jExtendedConfigurer class/documentation for details.
+	The locations list (arguments) is processed from bottom to top (last first), until an existing file is found. 
+	-->
+	<bean id="log4jInitialization" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass" value="nordnet.tools.configuration.Log4jExtendedConfigurer" />
+		<property name="targetMethod" value="initLogging" />
+		<property name="arguments">
+			<list>
+				<list>
+					<value>classpath:log4j.xml</value>
+					<value>classpath:log4j.afterInit.xml</value>
+					<value>file:///${common_rep}/${project.groupId}/${project.artifactId}/log4j.xml</value>
+				</list>
+			</list>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,575 @@
+<html>
+<head>
+
+<script type="text/javascript">
+	function color(element, color) {
+		if (color == "grey") {
+			element.style.backgroundColor = color;
+			element.style.color = "white";
+		} else {
+			element.style.backgroundColor = color;
+			element.style.color = "black";
+		}
+	}
+	function showOrHidde(element) {
+		if (element.style.display == 'none')
+			element.style.display = 'block';
+		else
+			element.style.display = 'none';
+	}
+	function getXMLHttpRequest() {
+		var xhr = null;
+
+		if (window.XMLHttpRequest || window.ActiveXObject) {
+			if (window.ActiveXObject) {
+				try {
+					xhr = new ActiveXObject("Msxml2.XMLHTTP");
+				} catch (e) {
+					xhr = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+			} else {
+				xhr = new XMLHttpRequest();
+			}
+		} else {
+			alert("Votre navigateur ne supporte pas l'objet XMLHTTPRequest...");
+			return null;
+		}
+
+		return xhr;
+	}
+
+	function afficheAllRules() {
+		document.getElementById("error").innerHTML = "";
+		var xhr = getXMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+				readAllRules(xhr.responseText);
+			} else {
+				if (xhr.readyState == 4
+						&& (xhr.status == 400 || xhr.status == 0)) {
+					document.getElementById("error").innerHTML = "requestProductId : "
+							+ xhr.responseText;
+				}
+			}
+		};
+
+		xhr.open("get", "./admin/rule", true);
+		xhr.send(null);
+	}
+
+	function readAllRules(oData) {
+		var objJSON = eval("(function(){return " + oData + ";})()");
+
+		var html = "";
+		for ( var tmp in objJSON) {
+			var rule = objJSON[tmp];
+
+			html = html
+					+ "<span onmouseenter=\"color(this,'grey')\" onmouseout=\"color(this,'white')\" onclick=\"javascript:afficheRule('"
+					+ rule
+					+ "');\">"
+					+ rule
+					+ "</span> <span onmouseenter=\"color(this,'grey')\" onmouseout=\"color(this,'white')\" onclick=\"javascript:runRule('"
+					+ rule + "');\"> &#8635;</span><br/>";
+		}
+		html = html + "<br/>"
+		html = html
+				+ "<span onmouseenter=\"color(this,'grey')\" onmouseout=\"color(this,'white')\" onclick=\"javascript:readAfficheRule('{}');\">Add new rule</span><br/>";
+
+		document.getElementById("rules").innerHTML = html;
+	}
+
+	function runRule(ruleId) {
+		document.getElementById("error").innerHTML = "";
+		var xhr = getXMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+				document.getElementById("runRuleSpan").innerHTML = "<fieldset><legend><span onmouseenter=\"color(this,'grey')\" onmouseout=\"color(this,'white')\" onclick=\"javascript:document.getElementById('runRuleSpan').innerHTML=''\" >[-]</span> Rule Result :</legend>"
+						+ xhr.responseText + "</fieldset>";
+			} else {
+				if (xhr.readyState == 4
+						&& (xhr.status == 400 || xhr.status == 0)) {
+					document.getElementById("error").innerHTML = "queries : "
+							+ xhr.responseText;
+				}
+			}
+		};
+
+		xhr.open("get", "./process/watchRule/" + ruleId, true);
+		xhr.send(null);
+	}
+
+	function afficheAllQueries() {
+		document.getElementById("error").innerHTML = "";
+		var xhr = getXMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+				readAllQueries(xhr.responseText);
+			} else {
+				if (xhr.readyState == 4
+						&& (xhr.status == 400 || xhr.status == 0)) {
+					document.getElementById("error").innerHTML = "queries : "
+							+ xhr.responseText;
+				}
+			}
+		};
+
+		xhr.open("get", "./admin/query", true);
+		xhr.send(null);
+	}
+
+	function readAllQueries(oData) {
+		var objJSON = eval("(function(){return " + oData + ";})()");
+
+		var html = "";
+		for ( var tmp in objJSON) {
+			var query = objJSON[tmp];
+
+			html = html
+					+ "<span onmouseenter=\"color(this,'grey')\" onmouseout=\"color(this,'white')\" onclick=\"javascript:afficheQuery('"
+					+ query + "');\">" + query + "</span><br/>";
+		}
+		html = html + "<br/>"
+		html = html
+				+ "<span onmouseenter=\"color(this,'grey')\" onmouseout=\"color(this,'white')\" onclick=\"javascript:readAfficheQuery('{}');\">Add new query</span><br/>";
+
+		document.getElementById("queries").innerHTML = html;
+	}
+
+	function afficheQuery(queryId) {
+		document.getElementById("error").innerHTML = "";
+		var xhr = getXMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+				readAfficheQuery(xhr.responseText);
+			} else {
+				if (xhr.readyState == 4
+						&& (xhr.status == 400 || xhr.status == 0)) {
+					document.getElementById("error").innerHTML = "rule : "
+							+ xhr.responseText;
+				}
+			}
+		};
+
+		xhr.open("get", "./admin/query/" + queryId, true);
+		xhr.send(null);
+	}
+
+	function readAfficheQuery(oData) {
+		var query = eval("(function(){return " + oData + ";})()");
+
+		var tmp = "<fieldset><legend><span onmouseenter=\"color(this,'grey')\" onmouseout=\"color(this,'white')\" onclick=\"javascript:document.getElementById('querySpan').innerHTML=''\" >[-]</span> Query Details :</legend>";
+		tmp += "<table>";
+		tmp += "<tr><td>Identifier : </td><td><input id=\"queryId\" type='text' value='"+query.identifier+"'/></td></tr>";
+		tmp += "<tr><td>Sql : </td><td><textarea cols='100' id=\"querySql\" >"
+				+ query.sql + "</textarea></td></tr>";
+		var nbResult = 0;
+		if (query.result != null) {
+			nbResult = query.result.length;
+		}
+		tmp += "<tr><td >Resultats :<input type=\"hidden\" id=\"nbQueryResult\" value=\""+nbResult+"\" ></td><td><table>";
+		if (query.result != null) {
+			for ( var res in query.result) {
+				tmp += "<tr><td><input type=\"text\" id=\"queryResult"+res+"\" value=\"" + query.result[res] + "\"></td></tr>";
+			}
+		}
+		if (query.result == null) {
+			tmp += "<tr><td><span id=\"queryResults\"><input type=\"text\" id=\"queryResult"+nbResult+"\" value=\"\"></span><input type=\"button\" value=\"Add\" onClick=\"javascript:addQueryParam()\" ></td></tr>";
+		}
+		tmp += "</table></td></tr>";
+		tmp += "</table>";
+		if (query.identifier == null) {
+			tmp += "<input type=\"button\" value=\"Ajouter\" onClick=\"javascript:addQuery()\" />";
+		}
+		tmp = tmp + "</fieldset>";
+
+		document.getElementById("querySpan").innerHTML = tmp;
+	}
+
+	function addQueryParam() {
+		var html = document.getElementById("queryResults").innerHTML;
+		document.getElementById("nbQueryResult").value = eval(document
+				.getElementById("nbQueryResult").value) + 1;
+		html += "<input type=\"text\" id=\"queryResult"
+				+ document.getElementById("nbQueryResult").value
+				+ "\" value=\"\">";
+
+		document.getElementById("queryResults").innerHTML = html;
+	}
+
+	function addQuery() {
+		document.getElementById("error").innerHTML = "";
+		var xhr = getXMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status < 300 || xhr.status == 0)) {
+				// reload the connection
+				afficheAllQueries();
+				afficheQuery(document.getElementById("queryId").value);
+			} else {
+				if (xhr.readyState == 4
+						&& (xhr.status == 400 || xhr.status == 0)) {
+					document.getElementById("error").innerHTML = "addQuery : "
+							+ xhr.responseText;
+				}
+			}
+		};
+
+		xhr.open("put", "./admin/query", true);
+
+		var trame = new Object();
+
+		// construct the new movement
+		trame["identifier"] = document.getElementById("queryId").value;
+		trame["sql"] = document.getElementById("querySql").value;
+
+		var result = [];
+		for (var i = 0; i <= document.getElementById("nbQueryResult").value; i++) {
+			if (document.getElementById("queryResult" + i) != null) {
+				result[i] = document.getElementById("queryResult" + i).value;
+			}
+		}
+		trame["result"] = result;
+
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.send(JSON.stringify(trame));
+	}
+
+	function afficheAllConnections() {
+		document.getElementById("error").innerHTML = "";
+		var xhr = getXMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+				readAllConnections(xhr.responseText);
+			} else {
+				if (xhr.readyState == 4
+						&& (xhr.status == 400 || xhr.status == 0)) {
+					document.getElementById("error").innerHTML = "connections : "
+							+ xhr.responseText;
+				}
+			}
+		};
+
+		xhr.open("get", "./admin/connectionDataBase", true);
+		xhr.send(null);
+	}
+
+	function readAllConnections(oData) {
+		var objJSON = eval("(function(){return " + oData + ";})()");
+
+		var html = "";
+		for ( var tmp in objJSON) {
+			var connection = objJSON[tmp];
+
+			html = html
+					+ "<span onmouseenter=\"color(this,'grey')\" onmouseout=\"color(this,'white')\" onclick=\"javascript:afficheConnection('"
+					+ connection + "');\">" + connection + "</span><br/>";
+		}
+		html = html + "<br/>"
+		html = html
+				+ "<span onmouseenter=\"color(this,'grey')\" onmouseout=\"color(this,'white')\" onclick=\"javascript:readAfficheConnection('{}');\">Add new connection</span><br/>";
+
+		document.getElementById("connections").innerHTML = html;
+	}
+
+	function afficheConnection(connectionId) {
+		document.getElementById("error").innerHTML = "";
+		var xhr = getXMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+				readAfficheConnection(xhr.responseText);
+			} else {
+				if (xhr.readyState == 4
+						&& (xhr.status == 400 || xhr.status == 0)) {
+					document.getElementById("error").innerHTML = "rule : "
+							+ xhr.responseText;
+				}
+			}
+		};
+
+		xhr.open("get", "./admin/connectionDataBase/" + connectionId, true);
+		xhr.send(null);
+	}
+
+	function readAfficheConnection(oData) {
+		var connection = eval("(function(){return " + oData + ";})()");
+
+		var tmp = "<fieldset><legend><span onmouseenter=\"color(this,'grey')\" onmouseout=\"color(this,'white')\" onclick=\"javascript:document.getElementById('connectionSpan').innerHTML=''\" >[-]</span> Connection Details :</legend>";
+		tmp += "<table>";
+		tmp += "<tr><td>Identifier : </td><td><input id=\"connectionId\" type='text' value='"+connection.identifier+"'/></td></tr>";
+		tmp += "<tr><td>Host : </td><td><input id=\"connectionHost\" type='text' value='"+connection.host+"'/></td></tr>";
+		tmp += "<tr><td>Schema : </td><td><input id=\"connectionSchema\" type='text' value='"+connection.schema+"'/></td></tr>";
+		tmp += "<tr><td>User : </td><td><input id=\"connectionUser\" type='text' value='"+connection.user+"'/></td></tr>";
+		tmp += "<tr><td>UserPassword : </td><td><input id=\"connectionPassword\" type='password' value='"+connection.userPassword+"'/></td></tr>";
+		tmp += "</table>";
+		if (connection.identifier == null) {
+			tmp += "<input type=\"button\" value=\"Ajouter\" onClick=\"javascript:addConnection()\" />";
+		}
+		tmp = tmp + "</fieldset>";
+
+		document.getElementById("connectionSpan").innerHTML = tmp;
+	}
+
+	function addConnection() {
+		document.getElementById("error").innerHTML = "";
+		var xhr = getXMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status < 300 || xhr.status == 0)) {
+				// reload the connection
+				afficheAllConnections();
+				afficheConnection(document.getElementById("connectionId").value);
+			} else {
+				if (xhr.readyState == 4
+						&& (xhr.status == 400 || xhr.status == 0)) {
+					document.getElementById("error").innerHTML = "addConnection : "
+							+ xhr.responseText;
+				}
+			}
+		};
+
+		xhr.open("put", "./admin/connectionDataBase", true);
+
+		var trame = new Object();
+
+		// construct the new movement
+		trame["identifier"] = document.getElementById("connectionId").value;
+		trame["host"] = document.getElementById("connectionHost").value;
+		trame["schema"] = document.getElementById("connectionSchema").value;
+		trame["user"] = document.getElementById("connectionUser").value;
+		trame["userPassword"] = document.getElementById("connectionPassword").value;
+
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.send(JSON.stringify(trame));
+	}
+
+	function afficheRule(ruleId) {
+		document.getElementById("error").innerHTML = "";
+		var xhr = getXMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+				readAfficheRule(xhr.responseText);
+			} else {
+				if (xhr.readyState == 4
+						&& (xhr.status == 400 || xhr.status == 0)) {
+					document.getElementById("error").innerHTML = "rule : "
+							+ xhr.responseText;
+				}
+			}
+		};
+
+		xhr.open("get", "./admin/rule/" + ruleId, true);
+		xhr.send(null);
+	}
+
+	function readAfficheRule(oData) {
+		var rule = eval("(function(){return " + oData + ";})()");
+
+		var tmp = "<fieldset><legend><span onmouseenter=\"color(this,'grey')\" onmouseout=\"color(this,'white')\" onclick=\"javascript:document.getElementById('ruleSpan').innerHTML=''\" >[-]</span> Rule Details :</legend>";
+		tmp += "<table>";
+		tmp += "<tr><td>Identifier : </td><td><input id=\"ruleId\" type='text' value='"+rule.identifier+"'/></td></tr>";
+		tmp += "<tr><td>Descriptif : </td><td><input id=\"ruleDescriptif\" type='text' value='"+rule.descriptif+"'/></td></tr>";
+		tmp += "<tr><td>level : </td><td><select id=\"ruleLevel\">";
+		tmp += "<option value=\"OK\" " + (rule.level == "OK" ? "selected" : "")
+				+ ">OK</option>";
+		tmp += "<option value=\"WARNING\" "
+				+ (rule.level == "WARNING" ? "selected" : "")
+				+ ">WARNING</option>";
+		tmp += "<option value=\"CRITICAL\" "
+				+ (rule.level == "CRITICAL" ? "selected" : "")
+				+ ">CRITICAL</option>";
+		tmp += "<option value=\"UNKNOWN\" "
+				+ (rule.level == "UNKNOWN" ? "selected" : "")
+				+ ">UNKNOWN</option>";
+		tmp += "</select></td></tr>";
+		tmp += "<tr><td>Database :</td><td><select id=\"ruleDatabase\"></select></td></tr>";
+		chargeDataBase(rule.connectionDataBase);
+		tmp += "<tr><td>Query :</td><td><select id=\"ruleQuery\"></select></td></tr>";
+		chargeQuery(rule.query);
+		tmp += "<tr><td>Parent rule :</td><td><select id=\"ruleParent\"></select></td></tr>";
+		chargeParent(rule.parent);
+		tmp += "</table>";
+		if (rule.identifier == null) {
+			tmp += "<input type=\"button\" value=\"Ajouter\" onClick=\"javascript:addRule()\" />";
+		}
+		tmp = tmp + "</fieldset>";
+
+		document.getElementById("ruleSpan").innerHTML = tmp;
+	}
+
+	function addRule() {
+		document.getElementById("error").innerHTML = "";
+		var xhr = getXMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status < 300 || xhr.status == 0)) {
+				// reload the movements
+				afficheAllRules();
+				afficheRule(document.getElementById("ruleId").value);
+			} else {
+				if (xhr.readyState == 4
+						&& (xhr.status == 400 || xhr.status == 0)) {
+					document.getElementById("error").innerHTML = "addRule : "
+							+ xhr.responseText;
+				}
+			}
+		};
+
+		xhr.open("put", "./admin/rule", true);
+
+		var trame = new Object();
+
+		// construct the new movement
+		trame["identifier"] = document.getElementById("ruleId").value;
+		trame["descriptif"] = document.getElementById("ruleDescriptif").value;
+		trame["level"] = document.getElementById("ruleLevel").value;
+		trame["connectionDataBase"] = document.getElementById("ruleDatabase").value;
+		trame["query"] = document.getElementById("ruleQuery").value;
+		if (document.getElementById("ruleParent").value != "null") {
+			trame["parent"] = document.getElementById("ruleParent").value;
+		}
+
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.send(JSON.stringify(trame));
+	}
+
+	function chargeDataBase(dataBaseId) {
+		document.getElementById("error").innerHTML = "";
+		var xhr = getXMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+				readChargeDataBase(xhr.responseText, dataBaseId);
+			} else {
+				if (xhr.readyState == 4
+						&& (xhr.status == 400 || xhr.status == 0)) {
+					document.getElementById("error").innerHTML = "connectionDataBase : "
+							+ xhr.responseText;
+				}
+			}
+		};
+
+		xhr.open("get", "./admin/connectionDataBase", true);
+		xhr.send(null);
+	}
+
+	function readChargeDataBase(oData, dataBaseId) {
+		var objJSON = eval("(function(){return " + oData + ";})()");
+
+		var html = "";
+		for ( var tmp in objJSON) {
+			var dataBase = objJSON[tmp];
+			html = html + "<option value=" + dataBase + " "
+					+ (dataBaseId == dataBase ? "selected" : "") + ">"
+					+ dataBase + "</option>";
+		}
+		document.getElementById("ruleDatabase").innerHTML = html;
+	}
+
+	function chargeQuery(queryId) {
+		document.getElementById("error").innerHTML = "";
+		var xhr = getXMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+				readChargeQuery(xhr.responseText, queryId);
+			} else {
+				if (xhr.readyState == 4
+						&& (xhr.status == 400 || xhr.status == 0)) {
+					document.getElementById("error").innerHTML = "query : "
+							+ xhr.responseText;
+				}
+			}
+		};
+
+		xhr.open("get", "./admin/query", true);
+		xhr.send(null);
+	}
+
+	function readChargeQuery(oData, queryId) {
+		var objJSON = eval("(function(){return " + oData + ";})()");
+
+		var html = "";
+		for ( var tmp in objJSON) {
+			var query = objJSON[tmp];
+			html = html + "<option value=" + query + " "
+					+ (queryId == query ? "selected" : "") + ">" + query
+					+ "</option>";
+		}
+		document.getElementById("ruleQuery").innerHTML = html;
+	}
+
+	function chargeParent(parentId) {
+		document.getElementById("error").innerHTML = "";
+		var xhr = getXMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+				readChargeParent(xhr.responseText, parentId);
+			} else {
+				if (xhr.readyState == 4
+						&& (xhr.status == 400 || xhr.status == 0)) {
+					document.getElementById("error").innerHTML = "parent : "
+							+ xhr.responseText;
+				}
+			}
+		};
+
+		xhr.open("get", "./admin/rule", true);
+		xhr.send(null);
+	}
+
+	function readChargeParent(oData, parentId) {
+		var objJSON = eval("(function(){return " + oData + ";})()");
+
+		html = "<option value='null' " + (parentId == null ? "selected" : "")
+				+ "></option>";
+		for ( var tmp in objJSON) {
+			var rule = objJSON[tmp];
+			html = html + "<option value=" + rule + " "
+					+ (parentId == rule ? "selected" : "") + ">" + rule
+					+ "</option>";
+		}
+		document.getElementById("ruleParent").innerHTML = html;
+	}
+</script>
+</head>
+<body
+	onload="javascript:afficheAllRules();javascript:afficheAllQueries();javascript:afficheAllConnections();">
+	<form method="get" id="getRulesForm">
+		<span style="color: red;" id="error"></span>
+
+		<table style="width: 100%">
+			<tr>
+				<td width="15%">
+					<fieldset style="background-color: F9F9F9;">
+						<legend>Connections</legend>
+
+						<span id="connections"></span>
+					</fieldset>
+				</td>
+				<td width="15%">
+					<fieldset style="background-color: F9F9F9;">
+						<legend>Queries</legend>
+
+						<span id="queries"></span>
+					</fieldset>
+				</td>
+				<td width="70%">
+					<fieldset style="background-color: F9F9F9;">
+						<legend>Rules</legend>
+
+						<span id="rules"></span>
+					</fieldset>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3"><span id="connectionSpan" /></td>
+			</tr>
+			<tr>
+				<td colspan="3"><span id="querySpan" /></td>
+			</tr>
+			<tr>
+				<td colspan="3"><span id="ruleSpan" /></td>
+			</tr>
+			<tr>
+				<td colspan="3"><span id="runRuleSpan" /></td>
+			</tr>
+		</table>
+
+	</form>
+</body>

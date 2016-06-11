@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net schema/beanmapping.xsd">
+
+	<configuration>
+		<stop-on-errors>true</stop-on-errors>
+		<date-format>MM/dd/yyyy HH:mm</date-format>
+		<wildcard>true</wildcard>
+
+		<custom-converters>
+
+			<converter
+				type="com.nordnet.zabuza.ws.converter.RuleConverter">
+				<class-a>com.nordnet.zabuza.domain.model.Rule</class-a>
+				<class-b>com.nordnet.zabuza.ws.entities.Rule</class-b>
+			</converter>
+
+			<converter
+				type="com.nordnet.zabuza.ws.converter.QueryConverter">
+				<class-a>com.nordnet.zabuza.domain.model.Query</class-a>
+				<class-b>com.nordnet.zabuza.ws.entities.Query</class-b>
+			</converter>
+
+			<converter
+				type="com.nordnet.zabuza.ws.converter.ConnectionDataBaseConverter">
+				<class-a>com.nordnet.zabuza.domain.model.ConnectionDataBase</class-a>
+				<class-b>com.nordnet.zabuza.ws.entities.ConnectionDataBase</class-b>
+			</converter>
+
+
+		</custom-converters>
+	</configuration>
+
+
+</mappings>

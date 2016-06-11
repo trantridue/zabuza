@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
+	debug="false">
+
+	<!-- ============================== -->
+	<!-- Append messages to the console -->
+	<!-- ============================== -->
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%c %d{HH:mm:ss.SSS} %-5p [%t] - %m\n" />
+		</layout>
+	</appender>
+
+	<appender name="MAIL_ERROR" class="org.apache.log4j.net.SMTPAppender">
+		<param name="SMTPHost" value="smtp.nordnet.fr" /> <!--  relaisnpai.msg.nordnet.fr smtp.nordnet.fr -->
+		<param name="From" value="alerte-saphir@nordnet.fr" />
+		<param name="To" value="mathieu.mortier@nordnet.fr" />
+		<param name="Subject" value="[LOG] com.nordnet.saphirt" />
+		<param name="BufferSize" value="1" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{HH:mm:ss.SSS} %-5p [%t] - %m\n" />
+		</layout>
+	</appender>
+
+	<!-- ================ -->
+	<!-- Limit categories -->
+	<!-- ================ -->
+
+    <!-- Category for log via mail -->
+	<category name="com.nordnet.saphir">
+		<priority value="INFO" />
+	</category>
+	
+	<!-- ======================= -->
+	<!-- Setup the Root category -->
+	<!-- ======================= -->
+	<root>
+		<priority value="INFO" />
+		<appender-ref ref="CONSOLE" />
+	</root>
+</log4j:configuration>

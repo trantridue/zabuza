@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+
+
+	<import resource="classpath*:applicationContextTest-Logic.xml" />
+
+	<!-- Runtime configuration -->
+
+	<bean id="runtimeProperties"
+		class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="locations">
+			<list>
+				<value>classpath:runtime.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Nordnet alert -->
+	<bean id="sendAlert" class="com.nordnet.common.alert.ws.client.fake.SendAlertFake" />
+
+	<!-- converter -->
+	<bean name="mapper" class="nordnet.tools.converter.impl.NordNetBeanMapper">
+		<property name="mappingFiles">
+			<list>
+				<value>ws-dozer-mapping-beans.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="converter" class="nordnet.tools.converter.impl.DefaultConverterImpl">
+		<property name="mapper" ref="mapper" />
+	</bean>
+	
+	<context:component-scan base-package="com.nordnet.zabuza.ws">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+</beans>

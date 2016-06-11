@@ -1,0 +1,54 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>zabuza.ws.entities</artifactId>
+	<packaging>jar</packaging>
+	<name>zabuza.ws.entities</name>
+	<url>http://maven.apache.org</url>
+
+	<parent>
+		<groupId>com.nordnet.zabuza</groupId>
+		<artifactId>zabuza.project</artifactId>
+		<version>1.0.16-SNAPSHOT</version>
+	</parent>
+
+	<dependencies>
+		<!-- TEST -->
+
+		<!-- SPRING -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring.data.jpa.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.nordnet.common</groupId>
+				<artifactId>entities-maven-plugin</artifactId>
+				<version>1.0.15</version>
+				<configuration>
+					<generate.location>${basedir}</generate.location>
+					<entities.location>${basedir}/entities.xml</entities.location>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>clean</phase>
+						<goals>
+							<goal>generate-sources</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

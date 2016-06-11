@@ -1,0 +1,68 @@
+<entities>
+	<author>MMORTIER, JLDANSOU</author>
+	<classes>
+		<String>
+			<testValue>"String"</testValue>
+		</String>
+		<class name="List&lt;String&gt;">
+			<imports>
+				<java.util.List />
+			</imports>
+			<testImports>
+				<java.util.Arrays />
+			</testImports>
+			<testImportsStatic>
+				<java.util.Arrays.asList />
+			</testImportsStatic>
+			<testValue>asList("string")</testValue>
+		</class>		
+		<Identifier>
+			<imports>
+				<com.nordnet.common.valueObject.identifier.Identifier />
+			</imports>
+			<testValue>Identifier.build("identifier")</testValue>
+		</Identifier>
+	</classes>
+	<packages>
+		<package name="com.nordnet.zabuza.ws.entities">
+			<entities>
+				<Rule>
+					<properties>
+						<connectionDataBase type="Identifier" />
+						<descriptif type="String" />
+						<identifier type="Identifier"/>
+						<level type="Level" />
+						<parent type="Identifier" optional="true"/>
+						<query type="Identifier"/>
+					</properties>
+				</Rule>
+				<Query>
+					<properties>
+						<identifier type="Identifier" />
+						<sql type="String" />
+						<result type="List&lt;String&gt;" />
+					</properties>
+				</Query>
+				<ConnectionDataBase>
+					<properties>
+						<identifier type="Identifier" />
+						<host type="String" />
+						<schema type="String" />
+						<user type="String" />
+						<userPassword type="String" />
+					</properties>
+				</ConnectionDataBase>
+			</entities>
+		</package>
+		<package name="com.nordnet.zabuza.ws.entities.constants">
+			<enums>
+				<Level>
+					<OK/>
+					<WARNING/>
+					<CRITICAL/>
+					<UNKNOWN/>
+				</Level>
+			</enums>
+		</package>
+	</packages>
+</entities>
