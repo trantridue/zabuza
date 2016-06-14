@@ -40,11 +40,15 @@ public class UserController extends WadlController {
 	@ResponseBody
 	public List<com.nordnet.zabuza.ws.entities.User> getAllUser() throws ConverterException {
 		List<com.nordnet.zabuza.ws.entities.User> users = new ArrayList<com.nordnet.zabuza.ws.entities.User>();
-		List<User> userModels = userService.getAllUser();
-		for (User user : userModels) {
-			users.add(converter.convert(user, com.nordnet.zabuza.ws.entities.User.class));
+		try {
+			List<User> userModels = userService.getAllUser();
+			for (User user : userModels) {
+				users.add(converter.convert(user, com.nordnet.zabuza.ws.entities.User.class));
+			}
+			return users;
+		} catch (Exception e) {
+			throw e;
 		}
-		return users;
 	}
 
 }

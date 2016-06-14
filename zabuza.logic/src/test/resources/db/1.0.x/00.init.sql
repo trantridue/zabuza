@@ -97,8 +97,8 @@ CREATE TABLE  `user` (
   `name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `address` varchar(1000) DEFAULT NULL,
-  `create_date` varchar(45) DEFAULT NULL,
-  `update_date` varchar(45) DEFAULT NULL,
+  `create_date` DATETIME,
+  `update_date` DATETIME,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 

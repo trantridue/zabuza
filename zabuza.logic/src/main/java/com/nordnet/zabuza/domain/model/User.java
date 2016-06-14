@@ -1,5 +1,7 @@
 package com.nordnet.zabuza.domain.model;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,8 +32,9 @@ public class User implements Comparable<User> {
 
 	/** identifier. */
 	@Id
-	@GeneratedValue
-	Integer id;
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", columnDefinition = "int(11)", nullable = false)
+	protected Long id;
 
 	/** {@link String} username. */
 	protected final String username;
@@ -135,14 +138,8 @@ public class User implements Comparable<User> {
 		/** {@link String} address. */
 		protected String address;
 
-		/** {@link LocalDateTime} createDate. */
-		@com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = com.nordnet.common.valueObject.utils.json.LocalDateTimeDeserializer.class)
-		@com.fasterxml.jackson.databind.annotation.JsonSerialize(using = com.nordnet.common.valueObject.utils.json.LocalDateTimeSerializer.class)
 		protected LocalDateTime createDate;
 
-		/** {@link LocalDateTime} updateDate. */
-		@com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = com.nordnet.common.valueObject.utils.json.LocalDateTimeDeserializer.class)
-		@com.fasterxml.jackson.databind.annotation.JsonSerialize(using = com.nordnet.common.valueObject.utils.json.LocalDateTimeSerializer.class)
 		protected LocalDateTime updateDate;
 
 		/** default protected Constructor. */
