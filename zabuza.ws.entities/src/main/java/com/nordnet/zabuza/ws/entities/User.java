@@ -29,15 +29,15 @@ public class User implements Comparable<User> {
 	/** {@link String} address. */
 	protected final String address;
 
-	/** {@link LocalDateTime} create_date. */
+	/** {@link LocalDateTime} createDate. */
 	@com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = com.nordnet.common.valueObject.utils.json.LocalDateTimeDeserializer.class)
 	@com.fasterxml.jackson.databind.annotation.JsonSerialize(using = com.nordnet.common.valueObject.utils.json.LocalDateTimeSerializer.class)
-	protected final LocalDateTime create_date;
+	protected final LocalDateTime createDate;
 
-	/** {@link LocalDateTime} update_date. */
+	/** {@link LocalDateTime} updateDate. */
 	@com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = com.nordnet.common.valueObject.utils.json.LocalDateTimeDeserializer.class)
 	@com.fasterxml.jackson.databind.annotation.JsonSerialize(using = com.nordnet.common.valueObject.utils.json.LocalDateTimeSerializer.class)
-	protected final LocalDateTime update_date;
+	protected final LocalDateTime updateDate;
 
 	/**
 	 * default deprecated Constructor.
@@ -51,8 +51,8 @@ public class User implements Comparable<User> {
 		name = null;
 		email = null;
 		address = null;
-		create_date = null;
-		update_date = null;
+		createDate = null;
+		updateDate = null;
 	}
 
 	/**
@@ -66,8 +66,8 @@ public class User implements Comparable<User> {
 		name = builder.name;
 		email = builder.email;
 		address = builder.address;
-		create_date = builder.create_date;
-		update_date = builder.update_date;
+		createDate = builder.createDate;
+		updateDate = builder.updateDate;
 	
 		// check parameters
 		com.nordnet.common.valueObject.utils.Null.checkNotNullOrEmpty("username", username);
@@ -75,8 +75,8 @@ public class User implements Comparable<User> {
 		com.nordnet.common.valueObject.utils.Null.checkNotNullOrEmpty("name", name);
 		com.nordnet.common.valueObject.utils.Null.checkNotNullOrEmpty("email", email);
 		com.nordnet.common.valueObject.utils.Null.checkNotNullOrEmpty("address", address);
-		com.nordnet.common.valueObject.utils.Null.checkNotNullOrEmpty("create_date", create_date);
-		com.nordnet.common.valueObject.utils.Null.checkNotNullOrEmpty("update_date", update_date);
+		com.nordnet.common.valueObject.utils.Null.checkNotNullOrEmpty("createDate", createDate);
+		com.nordnet.common.valueObject.utils.Null.checkNotNullOrEmpty("updateDate", updateDate);
 	}
 
 	/**
@@ -110,15 +110,15 @@ public class User implements Comparable<User> {
 		/** {@link String} address. */
 		protected String address;
 
-		/** {@link LocalDateTime} create_date. */
+		/** {@link LocalDateTime} createDate. */
 		@com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = com.nordnet.common.valueObject.utils.json.LocalDateTimeDeserializer.class)
 		@com.fasterxml.jackson.databind.annotation.JsonSerialize(using = com.nordnet.common.valueObject.utils.json.LocalDateTimeSerializer.class)
-		protected LocalDateTime create_date;
+		protected LocalDateTime createDate;
 
-		/** {@link LocalDateTime} update_date. */
+		/** {@link LocalDateTime} updateDate. */
 		@com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = com.nordnet.common.valueObject.utils.json.LocalDateTimeDeserializer.class)
 		@com.fasterxml.jackson.databind.annotation.JsonSerialize(using = com.nordnet.common.valueObject.utils.json.LocalDateTimeSerializer.class)
-		protected LocalDateTime update_date;
+		protected LocalDateTime updateDate;
 
 		/** default protected Constructor. */
 		protected Builder() {
@@ -186,26 +186,26 @@ public class User implements Comparable<User> {
 		}
 
 		/**
-		 * Setter of create_date.
+		 * Setter of createDate.
 		 *
-		 * @param create_date
-		 *			{@link LocalDateTime} the create_date to set.
+		 * @param createDate
+		 *			{@link LocalDateTime} the createDate to set.
 		 * @return this {@link Builder}
 		 */
-		public Builder create_date(final LocalDateTime create_date) {
-			this.create_date = create_date;
+		public Builder createDate(final LocalDateTime createDate) {
+			this.createDate = createDate;
 			return this;
 		}
 
 		/**
-		 * Setter of update_date.
+		 * Setter of updateDate.
 		 *
-		 * @param update_date
-		 *			{@link LocalDateTime} the update_date to set.
+		 * @param updateDate
+		 *			{@link LocalDateTime} the updateDate to set.
 		 * @return this {@link Builder}
 		 */
-		public Builder update_date(final LocalDateTime update_date) {
-			this.update_date = update_date;
+		public Builder updateDate(final LocalDateTime updateDate) {
+			this.updateDate = updateDate;
 			return this;
 		}
 
@@ -265,21 +265,21 @@ public class User implements Comparable<User> {
 	}
 
 	/**
-	 * Getter of create_date.
+	 * Getter of createDate.
 	 *
-	 * @return {@link LocalDateTime} the create_date
+	 * @return {@link LocalDateTime} the createDate
 	 */
-	public LocalDateTime getCreate_date() {
-		return create_date;
+	public LocalDateTime getCreateDate() {
+		return createDate;
 	}
 
 	/**
-	 * Getter of update_date.
+	 * Getter of updateDate.
 	 *
-	 * @return {@link LocalDateTime} the update_date
+	 * @return {@link LocalDateTime} the updateDate
 	 */
-	public LocalDateTime getUpdate_date() {
-		return update_date;
+	public LocalDateTime getUpdateDate() {
+		return updateDate;
 	}
 
 	@Override
@@ -294,8 +294,8 @@ public class User implements Comparable<User> {
 			.andEquals(getName(), user.getName())
 			.andEquals(getEmail(), user.getEmail())
 			.andEquals(getAddress(), user.getAddress())
-			.andEquals(getCreate_date(), user.getCreate_date())
-			.andEquals(getUpdate_date(), user.getUpdate_date()).isEquals();
+			.andEquals(getCreateDate(), user.getCreateDate())
+			.andEquals(getUpdateDate(), user.getUpdateDate()).isEquals();
 	}
 
 	@Override
@@ -306,8 +306,8 @@ public class User implements Comparable<User> {
 		.append(getName())
 		.append(getEmail())
 		.append(getAddress())
-		.append(getCreate_date())
-		.append(getUpdate_date()).hashCode();
+		.append(getCreateDate())
+		.append(getUpdateDate()).hashCode();
 	}
 
 	@Override
@@ -328,8 +328,8 @@ public class User implements Comparable<User> {
 		.andCompare(getName(), o.getName())
 		.andCompare(getEmail(), o.getEmail())
 		.andCompare(getAddress(), o.getAddress())
-		.andCompare(getCreate_date(), o.getCreate_date())
-		.andCompare(getUpdate_date(), o.getUpdate_date()).compare();
+		.andCompare(getCreateDate(), o.getCreateDate())
+		.andCompare(getUpdateDate(), o.getUpdateDate()).compare();
 	}
 
 

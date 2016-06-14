@@ -24,7 +24,7 @@ public class UserConverter implements CustomConverter {
 
 			return com.nordnet.zabuza.ws.entities.User.builder().username(user.getUsername())
 					.address(user.getAddress()).password(user.getPassword()).email(user.getEmail())
-					.name(user.getName()).update_date(user.getUpdate_date()).create_date(user.getCreate_date());
+					.name(user.getName()).createDate(user.getCreateDate()).updateDate(user.getUpdateDate()).build();
 		}
 		throw new InvalidArgumentException(source.getClass().getName(), "bad source for conversion");
 	}

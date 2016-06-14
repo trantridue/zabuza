@@ -34,8 +34,8 @@ public class UserTest extends GlobalTestCase {
 			.name("String")
 			.email("String")
 			.address("String")
-			.create_date(LocalDateTime.now())
-			.update_date(LocalDateTime.now()).build();
+			.createDate(LocalDateTime.now())
+			.updateDate(LocalDateTime.now()).build();
 		assertTrue(hasProtectedEmptyConstructorEqualsAndHashCodeAndCompareTo(User.class, tmp));
 		assertTrue(canBeJSonSerialized(tmp));
 	}

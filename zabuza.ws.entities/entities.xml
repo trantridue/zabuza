@@ -77,8 +77,8 @@
 						<name type="String" />
 						<email type="String" />
 						<address type="String" />
-						<create_date type="LocalDateTime" />
-						<update_date type="LocalDateTime" />
+						<createDate type="LocalDateTime" />
+						<updateDate type="LocalDateTime" />
 					</properties>
 				</User>
 			</entities>
