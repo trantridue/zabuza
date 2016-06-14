@@ -22,6 +22,24 @@
 			</imports>
 			<testValue>Identifier.build("identifier")</testValue>
 		</Identifier>
+		<Boolean>
+			<testValue>true</testValue>
+		</Boolean>
+		<Integer>
+			<testValue>1</testValue>
+		</Integer>
+		<LocalDate>
+			<imports>
+				<org.joda.time.LocalDate />
+			</imports>
+			<testValue>LocalDate.now()</testValue>
+		</LocalDate>
+		<LocalDateTime>
+			<imports>
+				<org.joda.time.LocalDateTime />
+			</imports>
+			<testValue>LocalDateTime.now()</testValue>
+		</LocalDateTime>
 	</classes>
 	<packages>
 		<package name="com.nordnet.zabuza.ws.entities">
@@ -52,6 +70,17 @@
 						<userPassword type="String" />
 					</properties>
 				</ConnectionDataBase>
+				<User>
+					<properties>
+						<username type="String" />
+						<password type="String" />
+						<name type="String" />
+						<email type="String" />
+						<address type="String" />
+						<create_date type="LocalDateTime" />
+						<update_date type="LocalDateTime" />
+					</properties>
+				</User>
 			</entities>
 		</package>
 		<package name="com.nordnet.zabuza.ws.entities.constants">

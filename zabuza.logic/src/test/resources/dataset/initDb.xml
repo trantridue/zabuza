@@ -15,4 +15,5 @@
   <rule id="2" descriptif="check all connection are used" identifier="check_connection" level="CRITICAL" data_base_idFK="1" parent_rule_idFK="1" query_idFK="2"/>
   <rule id="3" descriptif="get query" identifier="query" level="UNKNOWN" data_base_idFK="1" parent_rule_idFK="[NULL]" query_idFK="3"/>
   <rule id="4" descriptif="check all query are used" identifier="check_query" level="CRITICAL" data_base_idFK="1" parent_rule_idFK="3" query_idFK="4"/>
+  <user id="1" username="admin" password="123456" name="Due" address="van phuc" email="trantridue@gmail.com" update_date="2016-06-14 10:10:10" create_date="2016-06-14 10:10:10"/>
 </dataset>

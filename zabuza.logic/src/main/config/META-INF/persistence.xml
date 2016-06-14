@@ -6,6 +6,7 @@
 		<class>com.nordnet.zabuza.domain.model.ConnectionDataBase</class>
 		<class>com.nordnet.zabuza.domain.model.Query</class>
 		<class>com.nordnet.zabuza.domain.model.Rule</class>
+		<class>com.nordnet.zabuza.domain.model.User</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />

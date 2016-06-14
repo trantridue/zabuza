@@ -2,6 +2,7 @@
     connection_data_base*,
     query*,
     query_result*,
+    user*,
     rule*)>
 
 <!ELEMENT connection_data_base EMPTY>
@@ -37,3 +38,14 @@
     query_idFK CDATA #IMPLIED
 >
 
+<!ELEMENT user EMPTY>
+<!ATTLIST user
+    id CDATA #REQUIRED
+    username CDATA #IMPLIED
+    password CDATA #IMPLIED
+    name CDATA #REQUIRED
+    email CDATA #IMPLIED
+    address CDATA #IMPLIED
+    create_date CDATA #IMPLIED
+    update_date CDATA #IMPLIED
+>
