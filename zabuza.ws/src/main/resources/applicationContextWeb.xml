@@ -17,16 +17,6 @@
 	<!-- import saphir logic -->
 	<import resource="classpath*:applicationContext-Logic.xml" />
 
-	<!-- Nordnet alert -->
-	<bean id="sendAlert" class="com.nordnet.common.alert.ws.client.SendAlert">
-		<property name="projectId">
-			<value>#{projectProperties.project_name}</value>
-		</property>
-		<property name="url">
-			<value>#{projectProperties.send_alert_service_url}</value>
-		</property>
-	</bean>
-
 	<!-- converter -->
 	<bean name="mapper" class="nordnet.tools.converter.impl.NordNetBeanMapper">
 		<property name="mappingFiles">

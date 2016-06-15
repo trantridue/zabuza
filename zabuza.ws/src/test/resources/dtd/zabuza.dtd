@@ -1,42 +1,7 @@
 <!ELEMENT dataset (
-    connection_data_base*,
-    query*,
-    query_result*,
-    user*,
-    rule*)>
+    user*
+    )>
 
-<!ELEMENT connection_data_base EMPTY>
-<!ATTLIST connection_data_base
-    id CDATA #REQUIRED
-    host CDATA #IMPLIED
-    identifier CDATA #IMPLIED
-    schema_name CDATA #IMPLIED
-    user_name CDATA #IMPLIED
-    user_password CDATA #IMPLIED
->
-
-<!ELEMENT query EMPTY>
-<!ATTLIST query
-    id CDATA #REQUIRED
-    sql_query CDATA #IMPLIED
->
-
-<!ELEMENT query_result EMPTY>
-<!ATTLIST query_result
-    query_idFk CDATA #REQUIRED
-    result CDATA #IMPLIED
->
-
-<!ELEMENT rule EMPTY>
-<!ATTLIST rule
-    id CDATA #REQUIRED
-    descriptif CDATA #IMPLIED
-    identifier CDATA #IMPLIED
-    level CDATA #REQUIRED
-    data_base_idFK CDATA #IMPLIED
-    parent_rule_idFK CDATA #IMPLIED
-    query_idFK CDATA #IMPLIED
->
 
 <!ELEMENT user EMPTY>
 <!ATTLIST user
@@ -49,3 +14,4 @@
     create_date CDATA #IMPLIED
     update_date CDATA #IMPLIED
 >
+

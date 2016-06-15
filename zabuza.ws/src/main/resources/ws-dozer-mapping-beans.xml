@@ -11,29 +11,10 @@
 		<custom-converters>
 
 			<converter
-				type="com.nordnet.zabuza.ws.converter.RuleConverter">
-				<class-a>com.nordnet.zabuza.domain.model.Rule</class-a>
-				<class-b>com.nordnet.zabuza.ws.entities.Rule</class-b>
-			</converter>
-			
-			<converter
 				type="com.nordnet.zabuza.ws.converter.UserConverter">
 				<class-a>com.nordnet.zabuza.domain.model.User</class-a>
 				<class-b>com.nordnet.zabuza.ws.entities.User</class-b>
 			</converter>
-
-			<converter
-				type="com.nordnet.zabuza.ws.converter.QueryConverter">
-				<class-a>com.nordnet.zabuza.domain.model.Query</class-a>
-				<class-b>com.nordnet.zabuza.ws.entities.Query</class-b>
-			</converter>
-
-			<converter
-				type="com.nordnet.zabuza.ws.converter.ConnectionDataBaseConverter">
-				<class-a>com.nordnet.zabuza.domain.model.ConnectionDataBase</class-a>
-				<class-b>com.nordnet.zabuza.ws.entities.ConnectionDataBase</class-b>
-			</converter>
-
 
 		</custom-converters>
 	</configuration>

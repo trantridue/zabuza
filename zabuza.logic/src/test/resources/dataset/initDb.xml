@@ -1,19 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE dataset SYSTEM "./src/test/resources/dtd/zabuza.dtd">
 <dataset>
-  <connection_data_base id="1" host="127.0.0.1" identifier="test" schema_name="test_zabuza" user_name="test" user_password="test"/>
-  <query id="1" identifier="1" sql_query="select id from connection_data_base"/>
-  <query id="2" identifier="2" sql_query="SELECT count(*) FROM rule WHERE data_base_idFK = :id_connection_data_base"/>
-  <query id="3" identifier="3" sql_query="select id from query"/>
-  <query id="4" identifier="4" sql_query="SELECT id FROM rule WHERE query_idFK = :id_query"/>
-  <query id="5" identifier="5" sql_query="SELECT count(*) FROM rule WHERE query_idFK = :id_query"/>
-  <query_result query_idFk="1" result="id_connection_data_base"/>
-  <query_result query_idFk="2" result="nb"/>
-  <query_result query_idFk="3" result="id_query"/>
-  <query_result query_idFk="4" result="nb"/>
-  <rule id="1" descriptif="get connection" identifier="connection" level="UNKNOWN" data_base_idFK="1"  parent_rule_idFK="[NULL]" query_idFK="1"/>
-  <rule id="2" descriptif="check all connection are used" identifier="check_connection" level="CRITICAL" data_base_idFK="1" parent_rule_idFK="1" query_idFK="2"/>
-  <rule id="3" descriptif="get query" identifier="query" level="UNKNOWN" data_base_idFK="1" parent_rule_idFK="[NULL]" query_idFK="3"/>
-  <rule id="4" descriptif="check all query are used" identifier="check_query" level="CRITICAL" data_base_idFK="1" parent_rule_idFK="3" query_idFK="4"/>
   <user id="1" username="admin" password="123456" name="Due" address="van phuc" email="trantridue@gmail.com" update_date="2016-06-14 10:10:10" create_date="2016-06-14 10:10:10"/>
 </dataset>

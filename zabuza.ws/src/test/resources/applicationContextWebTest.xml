@@ -23,9 +23,6 @@
 		</property>
 	</bean>
 
-	<!-- Nordnet alert -->
-	<bean id="sendAlert" class="com.nordnet.common.alert.ws.client.fake.SendAlertFake" />
-
 	<!-- converter -->
 	<bean name="mapper" class="nordnet.tools.converter.impl.NordNetBeanMapper">
 		<property name="mappingFiles">

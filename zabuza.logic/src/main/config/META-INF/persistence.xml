@@ -3,9 +3,6 @@
 
 	<persistence-unit name="zabuzaPersistenceUnit" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>com.nordnet.zabuza.domain.model.ConnectionDataBase</class>
-		<class>com.nordnet.zabuza.domain.model.Query</class>
-		<class>com.nordnet.zabuza.domain.model.Rule</class>
 		<class>com.nordnet.zabuza.domain.model.User</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>

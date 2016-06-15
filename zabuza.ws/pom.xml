@@ -47,13 +47,6 @@
 		</dependency>
 
 		<!-- NORDNET FRAMEWORK -->
-
-		<!-- Nordnet common Alert -->
-		<dependency>
-			<groupId>com.nordnet.common</groupId>
-			<artifactId>alert.ws.client</artifactId>
-			<version>1.0.8</version>
-		</dependency>
 		
 		<!-- CONVERTER -->
 		<dependency>

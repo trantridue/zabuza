@@ -44,32 +44,6 @@
 	<packages>
 		<package name="com.nordnet.zabuza.ws.entities">
 			<entities>
-				<Rule>
-					<properties>
-						<connectionDataBase type="Identifier" />
-						<descriptif type="String" />
-						<identifier type="Identifier"/>
-						<level type="Level" />
-						<parent type="Identifier" optional="true"/>
-						<query type="Identifier"/>
-					</properties>
-				</Rule>
-				<Query>
-					<properties>
-						<identifier type="Identifier" />
-						<sql type="String" />
-						<result type="List&lt;String&gt;" />
-					</properties>
-				</Query>
-				<ConnectionDataBase>
-					<properties>
-						<identifier type="Identifier" />
-						<host type="String" />
-						<schema type="String" />
-						<user type="String" />
-						<userPassword type="String" />
-					</properties>
-				</ConnectionDataBase>
 				<User>
 					<properties>
 						<username type="String" />
@@ -83,15 +57,6 @@
 				</User>
 			</entities>
 		</package>
-		<package name="com.nordnet.zabuza.ws.entities.constants">
-			<enums>
-				<Level>
-					<OK/>
-					<WARNING/>
-					<CRITICAL/>
-					<UNKNOWN/>
-				</Level>
-			</enums>
-		</package>
+		
 	</packages>
 </entities>
