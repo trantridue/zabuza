@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<context:component-scan base-package="com.nordnet.zabuza.ws.controller" />
+
+	<context:property-placeholder location="classpath*:*.properties" />
+
+	<mvc:default-servlet-handler />
+
+	<context:annotation-config />
+	
+	<!-- as we don't use default mapping, need to redefine the understands language 
+		JSon and XML -->
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<util:list id="beanList">
+				<!-- text/plain -->
+				<!-- <ref bean="stringHttpMessageConverter"/> -->
+				<!-- application/octet-stream -->
+				<!-- <ref bean="byteArrayHttpMessageConverter" /> -->
+				<!-- */* -->
+				<!-- <ref bean="resourceHttpMessageConverter" /> -->
+				<!-- text/xml -->
+				<!-- <ref bean="sourceHttpMessageConverter" /> -->
+				<!-- application/x-www-form-urlencoded -->
+				<!-- <ref bean="formHttpMessageConverter" /> -->
+				<!-- application/xml -->
+				<ref bean="jaxb2RootElementHttpMessageConverter" />
+				<!-- application/json -->
+				<ref bean="MappingJacksonHttpMessageConverter" />
+			</util:list>
+		</property>
+	</bean>
+	<!-- <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter" /> -->
+	<!-- <bean id="byteArrayHttpMessageConverter" class="org.springframework.http.converter.ByteArrayHttpMessageConverter" /> -->
+	<!-- <bean id="resourceHttpMessageConverter" class="org.springframework.http.converter.ResourceHttpMessageConverter" /> -->
+	<!-- <bean id="sourceHttpMessageConverter" class="org.springframework.http.converter.xml.SourceHttpMessageConverter" /> -->
+	<!-- <bean id="formHttpMessageConverter" class="org.springframework.http.converter.FormHttpMessageConverter" /> -->
+	<bean id="jaxb2RootElementHttpMessageConverter" class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter" />
+	<bean id="MappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+
+	<!-- SWAGGER -->
+	<!-- Required so swagger-springmvc can access spring's RequestMappingHandlerMapping -->
+	<mvc:annotation-driven >
+		<!-- avoid to split last parameters with dot -->
+		<mvc:path-matching registered-suffixes-only="true"/>
+	</mvc:annotation-driven>
+ 	<bean id="customHandlerMapping" class="com.mangofactory.swagger.configuration.SpringSwaggerConfig" />
+	<bean class="com.nordnet.common.swagger.configuration.SwaggerConfig" >
+		<property name="title"><value>Opale API</value></property>
+		<property name="description"><value>Liste des services Opale</value></property>
+	</bean>		
+
+</beans>
